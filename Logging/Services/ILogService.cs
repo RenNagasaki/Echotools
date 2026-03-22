@@ -14,15 +14,15 @@ public interface ILogService
     event Action<TextSource>? LogUpdated;
 
     /// <summary>Creates a tracked event with an auto-incremented ID and logs a Start marker.</summary>
-    EKEventId Start(string method, TextSource source);
+    EchoEventId Start(string method, TextSource source);
 
     /// <summary>Logs an End marker for a previously started event.</summary>
-    void End(string method, EKEventId eventId);
+    void End(string method, EchoEventId eventId);
 
-    void Info(string method, string message, EKEventId eventId);
-    void Debug(string method, string message, EKEventId eventId);
-    void Error(string method, string message, EKEventId eventId);
-    void Warning(string method, string message, EKEventId eventId);
+    void Info(string method, string message, EchoEventId eventId);
+    void Debug(string method, string message, EchoEventId eventId);
+    void Error(string method, string message, EchoEventId eventId);
+    void Warning(string method, string message, EchoEventId eventId);
 
     /// <summary>
     /// Drains all concurrent bags into the main-thread lists. Call once per frame

@@ -10,6 +10,6 @@ public class LogMessage
     public string Method { get; set; } = null!;
     public string Message { get; set; } = null!;
     public Vector4 Color { get; set; }
-    public EKEventId EventId { get; set; } = null!;
+    public EchoEventId EventId { get; set; } = null!;
     public LogType Type { get; set; }
 }

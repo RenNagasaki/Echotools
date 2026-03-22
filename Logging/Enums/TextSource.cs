@@ -17,4 +17,7 @@ public enum TextSource
     VoiceTest,
     Backend,
     Sync,
+    CrowdGeneral,
+    CrowdSync,
+    CrowdAdmin,
 }

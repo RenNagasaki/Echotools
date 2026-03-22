@@ -2,15 +2,7 @@ using Echotools.Logging.Enums;
 
 namespace Echotools.Logging.DataClasses;
 
-public class EKEventId
+public class EKEventId : EchoEventId
 {
-    public static int CurrentId { get; set; } = 1;
-    public int Id { get; set; }
-    public TextSource TextSource { get; set; }
-
-    public EKEventId(int id, TextSource textSource)
-    {
-        Id = id;
-        TextSource = textSource;
-    }
+    public EKEventId(int id, TextSource textSource) : base(id, textSource) { }
 }

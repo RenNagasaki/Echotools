@@ -38,31 +38,31 @@ public class LogService : ILogService
         }
     }
 
-    public EKEventId Start(string method, TextSource source)
+    public EchoEventId Start(string method, TextSource source)
     {
-        var eventId = new EKEventId(EKEventId.CurrentId++, source);
+        var eventId = new EchoEventId(EchoEventId.CurrentId++, source);
         Info(method, "---------------------------Start----------------------------------", eventId);
         return eventId;
     }
 
-    public void End(string method, EKEventId eventId)
+    public void End(string method, EchoEventId eventId)
     {
         Info(method, "---------------------------End------------------------------------", eventId);
     }
 
-    public void Info(string method, string message, EKEventId eventId)
+    public void Info(string method, string message, EchoEventId eventId)
         => Log(LogType.Info, method, message, eventId);
 
-    public void Debug(string method, string message, EKEventId eventId)
+    public void Debug(string method, string message, EchoEventId eventId)
         => Log(LogType.Debug, method, message, eventId);
 
-    public void Error(string method, string message, EKEventId eventId)
+    public void Error(string method, string message, EchoEventId eventId)
         => Log(LogType.Error, method, message, eventId);
 
-    public void Warning(string method, string message, EKEventId eventId)
+    public void Warning(string method, string message, EchoEventId eventId)
         => Log(LogType.Warning, method, message, eventId);
 
-    private void Log(LogType logType, string method, string message, EKEventId eventId)
+    private void Log(LogType logType, string method, string message, EchoEventId eventId)
     {
         var logMessage = new LogMessage
         {
