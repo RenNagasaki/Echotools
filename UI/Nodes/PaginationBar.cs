@@ -112,13 +112,15 @@ public unsafe class PaginationBar
     }
 
     /// <summary>
-    /// Set the total number of items and page size. Resets to page 0.
+    /// Set the total number of items and page size. Only resets to page 0 when the total changes.
     /// </summary>
     public void SetTotalItems(int totalItems, int pageSize = 100)
     {
+        var changed = _totalItems != totalItems || _pageSize != pageSize;
         _totalItems = totalItems;
         _pageSize = pageSize;
-        _currentPage = 0;
+        if (changed)
+            _currentPage = Math.Clamp(_currentPage, 0, Math.Max(0, TotalPages - 1));
     }
 
     /// <summary>
