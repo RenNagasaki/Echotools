@@ -1,5 +1,6 @@
 using System;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using KamiToolKit.Enums;
 using KamiToolKit.Nodes;
 
 namespace Echotools.UI.Nodes;
@@ -39,7 +40,7 @@ public class DynamicIconButtonNode : CircleButtonNode
     /// <summary>
     /// Atomically swap icon, tooltip, and click handler in one call.
     /// </summary>
-    public void SetState(ButtonIcon icon, string tooltip, Action? onClick)
+    public void SetState(CircleButtonIcon icon, string tooltip, Action? onClick)
     {
         Icon = icon;
         Tooltip = tooltip;

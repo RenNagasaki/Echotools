@@ -11,6 +11,13 @@
     <IsPackable>false</IsPackable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFramework>net10.0-windows</TargetFramework>
+    <!--
+      KamiToolKit (latest) marks the tree-view nodes (TreeListNode,
+      TreeListCategoryNode, ...) as [Experimental], which is an ERROR by default.
+      The ScrollingTreeNode wrapper intentionally builds on them, so opt in to
+      the experimental surface project-wide.
+    -->
+    <NoWarn>$(NoWarn);KamiToolKit_Experimental</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
