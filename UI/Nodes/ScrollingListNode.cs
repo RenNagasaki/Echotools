@@ -18,11 +18,20 @@ namespace Echotools.UI.Nodes;
 /// </summary>
 public class ScrollingListNode : SimpleComponentNode
 {
-    private readonly ScrollingNode<VerticalListNode> listNode;
+    private readonly ReservedScrollingNode<VerticalListNode> listNode;
 
     public ScrollingListNode()
     {
-        listNode = new ScrollingNode<VerticalListNode>();
+        // FitContents lets the VerticalListNode size its own Height to fit its children.
+        // The new ScrollingNode<T> derives the scroll range from ContentNode.Height (vs the
+        // viewport height) — without this the content height stays 0, so no scrollbar shows
+        // and scrolling does nothing. (The removed ScrollingAreaNode<T> tracked height via a
+        // separate ContentHeight/FitToContentHeight path instead.) Matches KamiToolKit's own
+        // ButtonListNode usage.
+        listNode = new ReservedScrollingNode<VerticalListNode>
+        {
+            ContentNode = { FitContents = true },
+        };
         listNode.AttachNode(this);
     }
 

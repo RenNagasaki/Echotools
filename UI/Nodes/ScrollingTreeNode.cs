@@ -15,11 +15,19 @@ namespace Echotools.UI.Nodes;
 /// </summary>
 public class ScrollingTreeNode : SimpleComponentNode
 {
-    private readonly ScrollingNode<TreeListNode> listNode;
+    private readonly ReservedScrollingNode<TreeListNode> listNode;
 
     public ScrollingTreeNode()
     {
-        listNode = new ScrollingNode<TreeListNode>();
+        listNode = new ReservedScrollingNode<TreeListNode>();
+
+        // TreeListNode accumulates the total category height on an internal childContainer but
+        // never updates its OWN Height. The new ScrollingNode<T> derives the scroll range from
+        // ContentNode.Height (vs the viewport), so mirror the layout height onto the node via
+        // OnLayoutUpdate — otherwise the height stays 0 and no scrollbar shows / scrolling does
+        // nothing. (The removed ScrollingAreaNode<T> tracked this via a separate ContentHeight.)
+        listNode.ContentNode.OnLayoutUpdate = height => listNode.ContentNode.Height = height;
+
         listNode.AttachNode(this);
     }
 
