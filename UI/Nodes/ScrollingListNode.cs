@@ -103,7 +103,7 @@ public class ScrollingListNode : SimpleComponentNode
         set => listNode.ScrollSpeed = value;
     }
 
-    public int ScrollPosition
+    public float ScrollPosition
     {
         get => listNode.ScrollBarNode.ScrollPosition;
         set => listNode.ScrollBarNode.ScrollPosition = value;
