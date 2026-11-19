@@ -95,6 +95,17 @@ public Dictionary<TextSource, LogSourceConfig> LogConfigs { get; set; } = new()
 
 Add new values to the enum as needed — unused sources cost nothing.
 
+## Building and tests
+
+```bash
+git submodule update --init --recursive   # KamiToolKit, needed by UI
+dotnet test Echotools.sln -c Debug -p:Platform=x64
+```
+
+`Echotools.Tests` (xUnit) covers the parts that run without the game. Inside a plugin, `UI`
+uses the plugin's own `KamiToolKit` next to `Echotools/`; standalone it falls back to this
+repo's `KamiToolKit` submodule.
+
 ## License
 
 [GNU Affero General Public License v3.0](LICENSE)

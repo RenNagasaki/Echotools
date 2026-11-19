@@ -28,8 +28,17 @@
     <PackageReference Remove="DalamudPackager" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--
+    KamiToolKit: as a submodule inside a plugin (Plugin/Echotools/UI) the plugin's own
+    KamiToolKit next to Echotools wins, so the plugin and UI share one copy. Standalone
+    (this repo's own build and tests) the KamiToolKit submodule of this repo is used.
+    Never both: two copies would give two incompatible KamiToolKit assemblies.
+  -->
+  <ItemGroup Condition="Exists('..\..\KamiToolKit\KamiToolKit.csproj')">
     <ProjectReference Include="..\..\KamiToolKit\KamiToolKit.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('..\..\KamiToolKit\KamiToolKit.csproj')">
+    <ProjectReference Include="..\KamiToolKit\KamiToolKit.csproj" />
   </ItemGroup>
 
 </Project>
