@@ -4,8 +4,22 @@
 # GITHUB_USER / GITHUB_PAT are group-level CI variables. The GitHub path is hardcoded on purpose:
 # GITHUB_USER is the PAT owner, not necessarily the repo owner.
 
+# Datenschutz-Gate vor dem GitHub-Mirror (Vorlage und Einrichtung: private/claude
+# › tools/ci/privacy-gate.gitlab-ci.yml).
+include:
+  - project: private/claude
+    file: tools/ci/privacy-gate.gitlab-ci.yml
+
 stages:
+  - privacy
   - mirror
+
+# Datenschutz-Gate: laeuft genau dann, wenn gespiegelt wird (rules wie mirror-to-github),
+# und bricht den Mirror bei einem Verweis auf Person/Infrastruktur ab.
+privacy-gate:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
 
 mirror-to-github:
   stage: mirror
