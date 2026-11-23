@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.BaseTypes;
-using KamiToolKit.BaseTypes.ComponentNode;
 
 namespace Echotools.UI;
 

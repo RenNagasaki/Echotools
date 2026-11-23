@@ -18,7 +18,7 @@ namespace Echotools.UI.Nodes;
 /// </summary>
 public class ScrollingListNode : SimpleComponentNode
 {
-    private readonly ReservedScrollingNode<VerticalListNode> listNode;
+    private readonly ScrollingNode<VerticalListNode> listNode;
 
     public ScrollingListNode()
     {
@@ -27,8 +27,9 @@ public class ScrollingListNode : SimpleComponentNode
         // viewport height) — without this the content height stays 0, so no scrollbar shows
         // and scrolling does nothing. (The removed ScrollingAreaNode<T> tracked height via a
         // separate ContentHeight/FitToContentHeight path instead.) Matches KamiToolKit's own
-        // ButtonListNode usage.
-        listNode = new ReservedScrollingNode<VerticalListNode>
+        // ButtonListNode usage. ScrollingNode<T> itself keeps the content clear of a visible
+        // scrollbar (since KamiToolKit 62349f6), so no extra width reserve is needed here.
+        listNode = new ScrollingNode<VerticalListNode>
         {
             ContentNode = { FitContents = true },
         };
@@ -40,8 +41,7 @@ public class ScrollingListNode : SimpleComponentNode
         base.OnSizeChanged();
 
         listNode.Size = Size;
-        listNode.ContentNode.RecalculateLayout();
-        listNode.RecalculateSizes();
+        RecalculateLayout();
     }
 
     public bool FitContents
@@ -52,8 +52,8 @@ public class ScrollingListNode : SimpleComponentNode
 
     public bool FitWidth
     {
-        get => listNode.ContentNode.FitWidth;
-        set => listNode.ContentNode.FitWidth = value;
+        get => listNode.ContentNode.StretchWidth;
+        set => listNode.ContentNode.StretchWidth = value;
     }
 
     public VerticalListAnchor Anchor
@@ -70,8 +70,8 @@ public class ScrollingListNode : SimpleComponentNode
 
     public bool ClipListContents
     {
-        get => listNode.ContentNode.ClipListContents;
-        set => listNode.ContentNode.ClipListContents = value;
+        get => listNode.ContentNode.ClipContents;
+        set => listNode.ContentNode.ClipContents = value;
     }
 
     public float ItemSpacing
@@ -117,17 +117,27 @@ public class ScrollingListNode : SimpleComponentNode
 
     public void RecalculateLayout()
     {
-        listNode.ContentNode.RecalculateLayout();
-        listNode.RecalculateSizes();
+        listNode.ContentNode.UpdateLayout();
+        listNode.UpdateLayout();
     }
 
-    public void FitToContentHeight() => listNode.RecalculateSizes();
+    public void FitToContentHeight() => listNode.UpdateLayout();
 
     public void AddNode(IEnumerable<NodeBase> nodes) => listNode.ContentNode.AddNode(nodes);
 
     public void AddNode(NodeBase? node) => listNode.ContentNode.AddNode(node);
 
-    public void RemoveNode(params NodeBase[] nodes) => listNode.ContentNode.RemoveNode(nodes);
+    /// <summary>Removes and disposes the given nodes.</summary>
+    /// <remarks>
+    /// Goes through the single-node overload on purpose: KamiToolKit's
+    /// <c>RemoveNode(IEnumerable)</c> no longer disposes the removed nodes (62349f6), which
+    /// would leave them orphaned until KamiToolKit force-disposes them at unload.
+    /// </remarks>
+    public void RemoveNode(params NodeBase[] nodes)
+    {
+        foreach (var node in nodes)
+            listNode.ContentNode.RemoveNode(node);
+    }
 
     public void RemoveNode(NodeBase node) => listNode.ContentNode.RemoveNode(node);
 
