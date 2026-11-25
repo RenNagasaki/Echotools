@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
-using KamiToolKit.BaseTypes;
-using KamiToolKit.Enums;
-using KamiToolKit.Nodes;
-using KamiToolKit.Nodes.Simplified;
+using KamiToolKit.Core.Primitives.NodeBase;
+using KamiToolKit.Core.Enums;
+using KamiToolKit.UI.Nodes;
+using KamiToolKit.UI.Nodes.ComponentNode;
+using KamiToolKit.UI.Nodes.Layout;
+using KamiToolKit.UI.Nodes.Simplified;
 
 namespace Echotools.UI.Nodes;
 
@@ -141,7 +143,7 @@ public class ScrollingListNode : SimpleComponentNode
 
     public void RemoveNode(NodeBase node) => listNode.ContentNode.RemoveNode(node);
 
-    public void AddDummy(float size = 0.0f) => listNode.ContentNode.AddDummy(size);
+    public void AddSpacer(float size = 0.0f) => listNode.ContentNode.AddSpacer(size);
 
     public void Clear() => listNode.ContentNode.Clear();
 

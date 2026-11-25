@@ -2,8 +2,10 @@ using System;
 using System.Numerics;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit;
-using KamiToolKit.BaseTypes;
-using KamiToolKit.Nodes;
+using KamiToolKit.Core.Primitives.NodeBase;
+using KamiToolKit.UI.Nodes;
+using KamiToolKit.UI.Nodes.ComponentNode;
+using KamiToolKit.UI.Nodes.Layout;
 
 namespace Echotools.UI.Nodes;
 

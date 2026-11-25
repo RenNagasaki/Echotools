@@ -1,7 +1,9 @@
 using System;
 using FFXIVClientStructs.FFXIV.Component.GUI;
-using KamiToolKit.Enums;
-using KamiToolKit.Nodes;
+using KamiToolKit.Core.Enums;
+using KamiToolKit.UI.Nodes;
+using KamiToolKit.UI.Nodes.ComponentNode;
+using KamiToolKit.UI.Nodes.Layout;
 
 namespace Echotools.UI.Nodes;
 
